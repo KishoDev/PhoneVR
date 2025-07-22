@@ -169,7 +169,7 @@ jobs:
       - name: Build apk noGvr debug project (APK)
         run:  |
           cd code/mobile/android/PhoneVR
-          ./gradlew :${{ env.MAIN_PROJECT_MODULE }}:assembleNoGvrDebug --warning-mode=all --stacktrace -Dorg.gradle.java.home=${{env.JAVA_HOME}} --debug
+          ./gradlew :${{ env.MAIN_PROJECT_MODULE }}:assembleNoGvrDebug --warning-mode=all --stacktrace -Dorg.gradle.java.home=${{env.JAVA_HOME}}
 
       # Create APK Release
       - name: Build apk noGvr release project (APK)
