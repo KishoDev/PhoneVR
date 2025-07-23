@@ -120,7 +120,8 @@ AlvrPose getPose(uint64_t timestampNs) {
 
 void updateViewConfigs(uint64_t targetTimestampNs = 0) {
     if (!targetTimestampNs)
-        targetTimestampNs = GetBootTimeNano() + alvr_get_head_prediction_offset_ns();
+        // targetTimestampNs = GetBootTimeNano() + alvr_get_head_prediction_offset_ns(); // old
+        targetTimestampNs = GetBootTimeNano() + 50000000; // new, with 50ms of prediction.
 
     AlvrPose headPose = getPose(targetTimestampNs);
 
@@ -175,7 +176,8 @@ extern "C" JNIEXPORT void JNICALL Java_viritualisres_phonevr_ALVRActivity_initia
     AlvrClientCapabilities caps = {};
     caps.default_view_height = viewHeight;
     caps.default_view_width = viewWidth;
-    caps.external_decoder = false;
+    // caps.external_decoder = false; //old
+    caps.decoder_backend = ALVR_DECORED_BACKEND_DISABLED; // new
     caps.refresh_rates = refreshRatesBuffer;
     caps.refresh_rates_count = 1;
     caps.foveated_encoding =
@@ -339,7 +341,15 @@ extern "C" JNIEXPORT void JNICALL Java_viritualisres_phonevr_ALVRActivity_render
 
             const uint32_t *targetViews[2] = {(uint32_t *) &CTX.lobbyTextures[0],
                                               (uint32_t *) &CTX.lobbyTextures[1]};
-            alvr_resume_opengl(CTX.screenWidth / 2, CTX.screenHeight, targetViews, 1, true);
+            
+            // alvr_resume_opengl(CTX.screenWidth / 2, CTX.screenHeight, targetViews, 1, true); // old
+            // new
+            AlvrStreamConfig config = {
+                .view_width = CTX.screenWidth/2,
+                .view_height = CTX.screenHeight,
+                .enable_foveation = true
+            };
+            alvr_resume_opengl(config);
 
             CTX.renderingParamsChanged = false;
             CTX.glContextRecreated = false;
