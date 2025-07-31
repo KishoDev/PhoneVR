@@ -500,7 +500,7 @@ jobs:
           files: |
             code/mobile/android/PhoneVR/app/build/outputs/androidTest-results/**/TEST-*.xml
       
-      - uses: iterative/setup-cml@v1
+      - uses: iterative/setup-cml@v3
         if: (github.event_name == 'repository_dispatch' || github.event_name == 'pull_request') && always()
       
       - name: Publish Screenshots - Find Comment
