@@ -44,7 +44,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
       with:
         submodules: 'true'
     
@@ -112,7 +112,7 @@ jobs:
     if: github.event_name != 'repository_dispatch'
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: 'true'
 
@@ -254,7 +254,7 @@ jobs:
         api-level: [30] # 29
     steps:
       - name: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         if: github.event_name != 'repository_dispatch'
         with:
           submodules: 'true'
@@ -278,7 +278,7 @@ jobs:
 
       # Check out merge commit for Signed Pull Request
       - name: Fork based /ok-to-test checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         if: | 
           github.event_name == 'repository_dispatch' &&
           github.event.client_payload.slash_command.args.named.sha != '' &&
